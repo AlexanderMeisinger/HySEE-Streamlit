@@ -65,9 +65,9 @@ with st.sidebar:
         help='Left button must be selected for all other choices in this segment.',
     )
 
-    choices = {0: "yes", 1: "No"}
-    sel["no_h2grid"] = st.radio(
-        ":droplet: Hydrogen network",
+    choices = {0: "No", 1: "Yes"}
+    sel["low_h2cost"] = st.radio(
+        ":droplet: Low H2 cost",
         choices,
         format_func=lambda x: choices[x],
         horizontal=True,
@@ -75,8 +75,8 @@ with st.sidebar:
     )
     # ToDo: Change icon
     choices = {0: "no", 1: "yes"}
-    sel["ammonia"] = st.radio(
-        ":earth_africa: Ammonia demand",
+    sel["grid_freeze"] = st.radio(
+        ":earth_africa: Grid freeze",
         choices,
         format_func=lambda x: choices[x],
         horizontal=True,
@@ -84,15 +84,15 @@ with st.sidebar:
     )
     # ToDo: Change icon
     choices = {0: "no", 1: "yes"}
-    sel["decentral"] = st.radio(
-        ":wind_blowing_face: Decentral energy system",
+    sel["high_h2demand"] = st.radio(
+        ":wind_blowing_face: High H2 demand",
         choices,
         format_func=lambda x: choices[x],
         horizontal=True,
         help='Left button must be selected for all other choices in this segment.',
     )
 
-    number_sensitivities = sel["low_carbon"] + sel["no_h2grid"] + sel["ammonia"] + sel["decentral"]
+    number_sensitivities = sel["low_carbon"] + sel["low_h2cost"] + sel["grid_freeze"] + sel["high_h2demand"] 
 
     with st.expander("Details"):
          st.write("""
@@ -113,7 +113,7 @@ if (display == "Europe") and (number_sensitivities <= 1):
     choices = config["EU_scenarios"]
     idx = st.selectbox("View", choices, format_func=lambda x: choices[x], label_visibility='hidden')
 
-    ds = xr.open_dataset("data/EU_scenarios_streamlit_2.0-C.nc")
+    ds = xr.open_dataset("data/EU_scenarios_streamlit_run1.nc")
 
     accessors = {k: v for k, v in sel.items() if k not in ['power_grid', 'hydrogen_grid']}
     df = ds[idx].sel(**accessors, drop=True).to_dataframe().squeeze().unstack(level=0).dropna(axis=1)
@@ -174,10 +174,10 @@ if (display == "Europe") and (number_sensitivities <= 1):
 
     # ToDo: Check biomass capacities
     if idx == 'generation':
-        df.drop("biogas", axis=1, inplace=True, errors="ignore")
-        df.drop("solid biomass", axis=1, inplace=True, errors="ignore")
-        df.drop("unsustainable biogas", axis=1, inplace=True, errors="ignore")
-        df.drop("unsustainable bioliquids", axis=1, inplace=True, errors="ignore")
+        #df.drop("biogas", axis=1, inplace=True, errors="ignore")
+        #df.drop("solid biomass", axis=1, inplace=True, errors="ignore")
+        #df.drop("unsustainable biogas", axis=1, inplace=True, errors="ignore")
+        #df.drop("unsustainable bioliquids", axis=1, inplace=True, errors="ignore")
         df.drop("unsustainable solid biomass", axis=1, inplace=True, errors="ignore")
 
     # ToDo: Check biomass capacities
@@ -235,7 +235,7 @@ if (display == "Germany") and (number_sensitivities <= 1):
     choices = config["DE_scenarios"]
     idx = st.selectbox("View", choices, format_func=lambda x: choices[x], label_visibility='hidden')
 
-    ds = xr.open_dataset("data/DE_scenarios_streamlit_2.0-C.nc")
+    ds = xr.open_dataset("data/DE_scenarios_streamlit_run1.nc")
 
     accessors = {k: v for k, v in sel.items() if k not in ['power_grid', 'hydrogen_grid']}
     df = ds[idx].sel(**accessors, drop=True).to_dataframe().squeeze().unstack(level=0).dropna(axis=1)
