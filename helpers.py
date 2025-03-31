@@ -50,6 +50,7 @@ def rename_techs_energy_balance(label):
         "resistive heater": "power-to-heat",
         "H2 Electrolysis": "power-to-hydrogen",
         "methanolisation": "power-to-liquid",
+        "Methanol steam reforming": "methanol steam reforming",
         "Fischer-Tropsch": "power-to-liquid",
         "methanation": "power-to-methane",
         "Haber-Bosch": "haber-bosch",

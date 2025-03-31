@@ -232,6 +232,8 @@ tech_colors:
   methanolisation: '#83d6d5'
   methanolisation4: '#79c8c5'
   methanol: '#468c8b'
+  methanol steam reforming: '#5baead'
+  Methanol steam reforming: '#5baead'
   industry methanol: '#3d7f7e'
   shipping methanol: '#468c8b'
   shipping fuels: '#468c8b'
@@ -279,6 +281,7 @@ tech_colors:
   fossil oil and gas: '#ababab'
   green e-fuel imports: '#03a2ff'
   ammonia: '#03a2ff'
+  ammonia store: '#03a2ff'
   haber-bosch: '#03a2ff'
 
 preferred_order_energy_balance:
