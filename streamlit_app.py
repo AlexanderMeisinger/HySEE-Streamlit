@@ -17,6 +17,7 @@ import holoviews as hv
 import datetime
 import hvplot.pandas
 import plotly.express as px
+from PIL import Image
 
 from helpers import rename_techs_energy_balance, prepare_colors, rename_techs_h2_balance, rename_tech_capacity
 
@@ -42,20 +43,20 @@ st.write(style, unsafe_allow_html=True)
 ## SIDEBAR
 
 with st.sidebar:
+    image = Image.open("bmbf-logo.png")
+    st.image(image, width=150)
+    
     st.title("H2Global meets Africa: Energy demand modelling in Germany and the EU")
 
     st.markdown("""
-        **FENES**
+        **Institute for Energy Networks and Energy Storage, OTH Regensburg**
     """)
 
     pages = [
         "Europe",
-        "Germany",
-        "Germany-only",
-        "Europe-old",
-        "Germany-old"
+        "Germany"
     ]
-    display = st.selectbox("Pages", pages, help="Choose your view on the system.")
+    display = st.selectbox("Region", pages, help="Choose your view on the system.")
 
     sel = {}
 
