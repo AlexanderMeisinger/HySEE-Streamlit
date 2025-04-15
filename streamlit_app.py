@@ -62,7 +62,7 @@ with st.sidebar:
 
     choices = {0: "2 °C", 1: "1.5 °C"}
     sel["low_carbon"] = st.radio(
-        ":stopwatch: Temperature rise",
+        ":thermometer: Temperature rise",
         choices,
         format_func=lambda x: choices[x],
         horizontal=True,
@@ -71,7 +71,7 @@ with st.sidebar:
 
     choices = {0: "No", 1: "Yes"}
     sel["low_h2cost"] = st.radio(
-        ":droplet: Low H2 cost",
+        "💰 Low H2 cost",
         choices,
         format_func=lambda x: choices[x],
         horizontal=True,
@@ -80,7 +80,7 @@ with st.sidebar:
     # ToDo: Change icon
     choices = {0: "no", 1: "yes"}
     sel["grid_freeze"] = st.radio(
-        ":earth_africa: Grid freeze",
+        "🧊 Grid freeze",
         choices,
         format_func=lambda x: choices[x],
         horizontal=True,
@@ -89,7 +89,7 @@ with st.sidebar:
     # ToDo: Change icon
     choices = {0: "no", 1: "yes"}
     sel["high_h2demand"] = st.radio(
-        ":wind_blowing_face: High H2 demand",
+        "💧 High H2 demand",
         choices,
         format_func=lambda x: choices[x],
         horizontal=True,
