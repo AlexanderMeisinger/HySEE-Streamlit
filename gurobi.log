@@ -1,0 +1,13 @@
+
+Gurobi 11.0.3 (linux64, gurobi_cl) logging started Tue Jan 14 08:00:37 2025
+
+Set parameter Username
+Set parameter LogFile to value "gurobi.log"
+Using license file /home/alex-charly/gurobi.lic
+
+Gurobi 11.0.3 (linux64, gurobi_cl) logging started Tue Jan 14 08:01:27 2025
+
+Set parameter Username
+Set parameter LogFile to value "gurobi.log"
+Using license file /home/alex-charly/gurobi.lic
+Academic license - for non-commercial use only - expires 2026-01-14

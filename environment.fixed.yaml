@@ -1,4 +1,4 @@
-name: stl
+name: dashboard_h2g_a_ap3_eu
 channels:
   - http://conda.anaconda.org/gurobi
   - conda-forge

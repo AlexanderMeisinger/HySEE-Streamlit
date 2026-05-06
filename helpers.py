@@ -1,149 +1,239 @@
-
-def rename_techs(label):
-
-    prefix_to_remove = [
-        "residential ",
-        "services ",
-        "urban ",
-        "rural ",
-        "central ",
-        "decentral "
-    ]
-
-    rename_if_contains = [
-        "CHP",
-        "gas boiler",
-        "biogas",
-        "solar thermal",
-        "air heat pump",
-        "ground heat pump",
-        "resistive heater",
-        "Fischer-Tropsch"
-    ]
-
-    rename_if_contains_dict = {
-        "water tanks": "hot water storage",
-        "retrofitting": "building retrofitting",
+def rename_techs_energy_balance(label):
+        prefix_to_remove = [
+            "residential ",
+            "services ",
+            "urban ",
+            "rural ",
+            "central ",
+            "decentral "
+        ]
+    
+        rename_if_contains_dict = {
+        "water tanks": "hot water storage", 
         "battery": "battery storage",
+        "Battery": "battery storage",
+        "Sequestration": "carbon capture",
+        "sequestered": "carbon capture"
+        }
+
+        rename = {
+        # REE
+        "Onshore Wind": "onshore wind",
+        "Offshore Wind (AC)": "offshore wind",
+        "Offshore Wind (DC)": "offshore wind",
+        "Offshore Wind (Floating)": "offshore wind",
+        "Reservoir & Dam": "hydroelectricity",
+        "Run of River": "hydroelectricity",
+        "Solar": "solar PV", 
+        "solar rooftop": "solar PV",
+        "solar-hsat": "solar PV",
+        # fossil
+        "gas": "gas",
+        "oil primary": "oil",
+        # biomass 
+        "solid biomass": "biomass",
+        "unsustainable solid biomass": "biomass",
+        "solid biomass CHP": "biomass",
+        "solid biomass CHP CC": "biomass",
+        # biogas
+        "biogas": "biomass", 
+        "unsustainable biogas": "biomass",
+        "biogas to gas": "biomass",
+        # bioliquids
+        "unsustainable bioliquids": "biomass",
+        # electricity
+        "electricity": "residential electricity",
+        "industry electricity": "industry electricity",
+        "agriculture electricity": "industry electricity",
+        "air heat pump": "power-to-heat",
+        "ground heat pump": "power-to-heat",
+        "resistive heater": "power-to-heat",
+        "H2 Electrolysis": "power-to-hydrogen",
+        "methanolisation": "power-to-liquid",
+        "Methanol steam reforming": "methanol steam reforming",
+        "Fischer-Tropsch": "power-to-liquid",
+        "methanation": "power-to-methane",
+        "Haber-Bosch": "haber-bosch",
+        # heat
+        "agriculture heat": "heat",
+        "heat": "heat",
+        "low-temperature heat for industry": "heat",
+        # coal 
+        "coal for industry": "coal", 
+        # biomass
+        "solid biomass for industry": "biomass",
+        "solid biomass for industry CC": "biomass",
+        "biomass boiler": "biomass",
+        # methane
+        "gas for industry": "methane",
+        "gas for industry CC": "methane",
+        "gas boiler": "methane",
+        "CCGT": "methane",
         "SMR": "steam methane reforming",
-        "SMR CC": "steam methane reforming CC",
-    }
-
-    rename = {
-        "solar": "solar PV",
+        "SMR CC": "steam methane reforming",
+        "CHP": "methane",
+        "Combined-Cycle Gas": "methane",
+        "Open-Cycle Gas": "methane",
+        # hydrogen 
+        "H2 for industry": "hydrogen",
+        "land transport fuel cell": "hydrogen",
+        "H2 Fuel Cell": "hydrogen",
+        # liquid hydrocarbon
+        "kerosene for aviation": "liquid hydrocarbon",
+        "naphtha for industry": "liquid hydrocarbon",
+        "agriculture machinery oil": "liquid hydrocarbon",
+        "shipping oil": "liquid hydrocarbon", 
+        "oil refining": "liquid hydrocarbon",
+        "land transport oil": "liquid hydrocarbon",
+        "shipping methanol": "liquid hydrocarbon",
+        "oil boiler": "liquid hydrocarbon",
+        # co2
+        "DAC": "direct air capture",
+        "process emissions CC": "process emissions carbon capture",
+        # syngas
         "Sabatier": "methanation",
-        "offwind": "offshore wind",
-        "offwind-ac": "offshore wind (AC)",
-        "offwind-dc": "offshore wind (DC)",
-        "onwind": "onshore wind",
-        "ror": "hydroelectricity",
-        "hydro": "hydroelectricity",
-        "PHS": "hydroelectricity",
+        # ammonia
         "NH3": "ammonia",
-        "co2 Store": "DAC",
-        "co2 stored": "CO2 sequestration",
-        "AC": "transmission lines",
-        "DC": "transmission lines",
-        "B2B": "transmission lines"
-    }
+        # battery electric vehicles
+        "BEV charger": "battery electric vehicles",
+        "V2G": "battery electric vehicles",
+        "land transport EV": "battery electric vehicles",
+        # others
+        "transmission lines": "others",
+        "electricity distribution grid": "others",
+        "AC": "others", 
+        "DC": "others",
+        "B2B": "others", 
+        # storage
+        "Pumped Hydro Storage": "pumped hydro storage",
+        "H2 Store": "hydrogen storage",
+        # pipeline
+        "H2 pipeline": "hydrogen pipeline"
+        }
 
-    for ptr in prefix_to_remove:
-        if label[:len(ptr)] == ptr:
-            label = label[len(ptr):]
+        for ptr in prefix_to_remove:
+            while label.startswith(ptr):  # Ensure all occurrences are removed
+                label = label[len(ptr):]
 
-    for rif in rename_if_contains:
-        if rif in label:
-            label = rif
+        for old,new in rename_if_contains_dict.items():
+            if old in label:
+                label = new
 
-    for old,new in rename_if_contains_dict.items():
-        if old in label:
-            label = new
+        for old,new in rename.items():
+            if old == label:
+                label = new
 
-    for old,new in rename.items():
-        if old == label:
-            label = new
-    return label
+        return label
 
+def rename_techs_h2_balance(label):    
+        rename = {
+        "Fischer-Tropsch": "fischer-tropsch",
+        "H2 Electrolysis": "H2 electrolysis",
+        "H2 Fuel Cell": "H2 fuel cell",
+        "SMR": "steam methane reforming",
+        "SMR CC": "steam methane reforming carbon capture",
+        "Sabatier": "methanation", 
+        "Haber-Bosch": "haber-bosch"
+        }
 
-def rename_techs_tyndp(tech):
-    tech = rename_techs(tech)
-    # if "heat pump" in tech or "resistive heater" in tech:
-    #    return "power-to-heat"
-    # elif tech in ["H2 Electrolysis", "methanation", "helmeth", "H2 liquefaction"]:
-    #    return "power-to-gas"
-    if tech == "H2":
-        return "H2 storage"
-    # elif tech in ["OCGT", "CHP", "gas boiler", "H2 Fuel Cell"]:
-    #    return "gas-to-power/heat"
-    # elif "solar" in tech:
-    #    return "solar"
-    #elif tech == "Fischer-Tropsch":
-    #    return "power-to-liquid"
-    elif "offshore wind" in tech:
-        return "offshore wind"
-    #    if "heat pump" in tech:
-    #        return "heat pump"
-    elif tech == "gas":
-        return "fossil gas"
-    # elif "CC" in tech or "sequestration" in tech:
-    #    return "CCS"
-    elif tech in ["industry electricity", "agriculture electricity"]:
-        return "industry electricity"
-    elif "oil emissions" in tech:
-        return "oil emissions"
-    elif "agriculture" in tech:
-        return "agriculture"
-    elif "H2 for" in tech or tech == "land transport fuel cell":
-        return "H2"
-    elif "EV" in tech or tech in ['Li ion', "V2G"]:
-        return "land transport EV"
-    elif tech == "electricity" or tech == "industry electricity":
-        return "electricity"
-    elif "co2" in tech:
-        return "CCS"
-    else:
-        return tech
+        for old,new in rename.items():
+            if old == label:
+                label = new
+
+        return label
+
+def rename_tech_capacity(label):
+        prefix_to_remove = [
+            "residential ",
+            "services ",
+            "urban ",
+            "rural ",
+            "central ",
+            "decentral "
+        ]
+    
+        rename_if_contains_dict = {
+        "water tanks": "hot water storage", 
+        }
+        
+        rename = {
+            "BEV charger": "battery electric vehicles",
+            "EV battery": "battery electric vehicles",
+            "V2G": "battery electric vehicles",
+            "H2 Store": "hydrogen storage",
+            "Onshore Wind": "onshore wind",
+            "Offshore Wind (AC)": "offshore wind (AC)",
+            "Offshore Wind (DC)": "offshore wind (DC)",
+            "Offshore Wind (Floating)": "offshore wind",
+            "Pumped Hydro Storage": "pumped hydro storage",
+            "Reservoir & Dam": "reservoir & dam",
+            "Run of River": "run of river",
+            "Solar": "solar PV", 
+            "oil primary": "oil",
+            "Onshore Wind": "onshore wind",
+            "solid biomass CHP": "biomass",
+            "solid biomass CHP CC": "biomass",
+            "biogas to gas": "biomass",
+            "air heat pump": "power-to-heat",
+            "ground heat pump": "power-to-heat",
+            "resistive heater": "power-to-heat",
+            "Fischer-Tropsch": "fischer-tropsch",
+            "coal for industry": "coal", 
+            "solid biomass for industry": "biomass",
+            "solid biomass for industry CC": "biomass",
+            "biomass boiler": "biomass",
+            "gas for industry": "methane",
+            "gas for industry CC": "methane",
+            "gas boiler": "methane",
+            "CCGT": "methane",
+            "SMR": "steam methane reforming",
+            "SMR CC": "steam methane reforming",
+            "CHP": "methane",
+            "Combined-Cycle Gas": "methane",
+            "Open-Cycle Gas": "methane",
+            "H2 for industry": "hydrogen",
+            "land transport fuel cell": "hydrogen",
+            "H2 Fuel Cell": "hydrogen",
+            "H2 Electrolysis": "hydrogen",
+            "kerosene for aviation": "kerosene",
+            "naphtha for industry": "naphtha",
+            "agriculture machinery oil": "oil",
+            "shipping oil": "oil", 
+            "oil refining": "oil",
+            "land transport oil": "oil",
+            "industry methanol": "methanol",
+            "shipping methanol": "methanol",
+            "oil boiler": "oil",
+            "DAC": "direct air capture",
+            "process emissions CC": "process emissions",
+            "Sabatier": "methanation",
+            "transmission lines": "others",
+            "electricity distribution grid": "others",
+            "AC": "others", 
+            "DC": "others",
+            "B2B": "others", 
+            "H2 pipeline": "hydrogen",
+            "Haber-Bosch": "haber-bosch"
+            }
+
+        for ptr in prefix_to_remove:
+            while label.startswith(ptr):  # Ensure all occurrences are removed
+                label = label[len(ptr):]
+
+        for old,new in rename_if_contains_dict.items():
+            if old in label:
+                label = new
+
+        for old,new in rename.items():
+            if old == label:
+                label = new
+
+        return label
 
 
 def prepare_colors(config):
-
     colors = config["tech_colors"]
-
-    colors["electricity grid"] = colors["electricity"]
-    colors["ground-sourced ambient"] = colors["ground heat pump"]
-    colors["air-sourced ambient"] = colors["air heat pump"]
-    colors["co2 atmosphere"] = colors["co2"]
-    colors["co2 stored"] = colors["co2"]
-    colors["net co2 emissions"] = colors["co2"]
-    colors["co2 sequestration"] = colors["co2"]
-    colors["fossil oil"] = colors["oil"]
-    colors["fossil gas"] = colors["gas"]
-    colors["biogas to gas"] = colors["biogas"]
-    colors["process emissions from feedstocks"] = colors["process emissions"]
-
-    gas_boilers = ['residential rural gas boiler', 'services rural gas boiler',
-        'residential urban decentral gas boiler',
-        'services urban decentral gas boiler', 'urban central gas boiler']
-    for gas_boiler in gas_boilers:
-        colors[gas_boiler] = colors["gas boiler"]
-
-    colors["urban central gas CHP"] = colors["CHP"]
-    colors["urban central gas CHP CC"] = colors["CHP"]
-    colors["urban central solid biomass CHP"] = colors["CHP"]
-    colors["urban central solid biomass CHP CC"] = colors["CHP"]
     
     return colors
+    
 
-def get_cmap(c):
-    if "heat" in c:
-        return "Reds"
-    elif "import-export" in c:
-        return "PiYG_r"
-    elif "solar" in c:
-        return "Oranges"
-    elif "hydrogen" in c:
-        return "Purples"
-    elif "bio" in c or "battery" in c:
-        return "Greens"
-    else: 
-        return 'Blues'
