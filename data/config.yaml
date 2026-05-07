@@ -415,7 +415,7 @@ EU_scenarios:
   hydrogen: Hydrogen Balance (TWh/a)
   costs: Total System Costs (bn€/a)
   co2: Carbon Dioxide Balance (MtCO2/a)
-  #generation: Generation Capacities (GW)
+  generation: REE Generation Capacities (GW)
   storage: Storage Capacities (TWh)
   #conversion: Conversion Capacities (GW)
 
@@ -423,7 +423,7 @@ DE_scenarios:
   energy: Energy Balance (TWh/a)
   hydrogen: Hydrogen Balance (TWh/a)
   #costs: Total System Costs (bn€/a)
-  #generation: Generation Capacities (GW)
+  generation: REE Generation Capacities (GW)
   storage: Storage Capacities (TWh)
   #conversion: Conversion Capacities (GW)
   

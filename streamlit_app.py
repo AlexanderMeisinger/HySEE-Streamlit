@@ -189,8 +189,12 @@ if (display == "Europe") and (number_sensitivities <= 1):
          df.drop("others", axis=1, inplace=True, errors="ignore")
          df.drop("hydrogen", axis=1, inplace=True, errors="ignore")
 
-
     if idx == 'generation':
+        df.drop("coal", axis=1, inplace=True, errors="ignore")
+        df.drop("gas", axis=1, inplace=True, errors="ignore")
+        df.drop("lignite", axis=1, inplace=True, errors="ignore")
+        df.drop("nuclear", axis=1, inplace=True, errors="ignore")
+        df.drop("oil", axis=1, inplace=True, errors="ignore")
         df.drop("biogas", axis=1, inplace=True, errors="ignore")
         df.drop("solid biomass", axis=1, inplace=True, errors="ignore")
         df.drop("unsustainable biogas", axis=1, inplace=True, errors="ignore")
@@ -313,6 +317,11 @@ if (display == "Germany") and (number_sensitivities <= 1):
 
     # ToDo: Check biomass capacities
     if idx == 'generation':
+        df.drop("coal", axis=1, inplace=True, errors="ignore")
+        df.drop("gas", axis=1, inplace=True, errors="ignore")
+        df.drop("lignite", axis=1, inplace=True, errors="ignore")
+        df.drop("nuclear", axis=1, inplace=True, errors="ignore")
+        df.drop("oil", axis=1, inplace=True, errors="ignore")
         df.drop("biogas", axis=1, inplace=True, errors="ignore")
         df.drop("solid biomass", axis=1, inplace=True, errors="ignore")
         df.drop("unsustainable biogas", axis=1, inplace=True, errors="ignore")
