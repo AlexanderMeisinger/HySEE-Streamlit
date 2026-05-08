@@ -4,7 +4,7 @@ Base: [![DOI](https://zenodo.org/badge/451538981.svg)](https://zenodo.org/badge/
 
 Code for interactive dashboard for results exploration.
 
-See live version at: https://dashboardh2g-a-ap3-eu-lhzgn5ezesjvapjuoorzbp.streamlit.app/
+See live version at: https://europe-demand.streamlit.app/
 
 ## Local Installation and Usage
 
