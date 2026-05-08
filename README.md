@@ -6,7 +6,7 @@ Branch: [H2G-A-AP3](https://github.com/AlexanderMeisinger/pypsa-eur/tree/H2G-A-A
 
 Preparation: [h2g-a-ap3-eu](https://github.com/AlexanderMeisinger/analyse-h2g-a-ap3-eu)
 
-# Code for interactive dashboard for results exploration.
+## Code for interactive dashboard for results exploration.
 
 See live version at: https://europe-demand.streamlit.app/
 
