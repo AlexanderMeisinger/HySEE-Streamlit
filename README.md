@@ -2,7 +2,7 @@
 
 Base: [![DOI](https://zenodo.org/badge/451538981.svg)](https://zenodo.org/badge/latestdoi/451538981)
 
-Branch: [Demand-Europe-Branch](https://github.com/AlexanderMeisinger/pypsa-eur/tree/H2G-A-AP3)
+Branch: [Demand-Europe-Branch](https://github.com/AlexanderMeisinger/pypsa-eur/tree/H2G-A-Demand-Europe-WP3)
 
 Preparation: [Demand-Europe-Preparation](https://github.com/AlexanderMeisinger/analyse-h2g-a-ap3-eu)
 
