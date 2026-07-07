@@ -1,6 +1,6 @@
 # HySEE - Hydrogen in Southeast Europe"
 
-Base: [![DOI](https://zenodo.org/badge/451538981.svg)](https://zenodo.org/badge/latestdoi/451538981) & [![GitHub](https://github.com/AlexanderMeisinger/Demand-Europe-Streamlit)https://github.com/AlexanderMeisinger/Demand-Europe-Streamlit]
+Base: [![DOI](https://zenodo.org/badge/451538981.svg)](https://zenodo.org/badge/latestdoi/451538981) & [![GitHub](https://github.com/AlexanderMeisinger/Demand-Europe-Streamlit)](https://github.com/AlexanderMeisinger/Demand-Europe-Streamlit)
 
 Branch: [HySEE-Energy-Model](https://github.com/AlexanderMeisinger/HySEE-Energy-Model)
 
