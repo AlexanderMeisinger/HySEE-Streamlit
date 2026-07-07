@@ -1,14 +1,14 @@
-# H2Global meets Africa: Energy demand modelling in Germany and the EU"
+# HySEE - Hydrogen in Southeast Europe"
 
-Base: [![DOI](https://zenodo.org/badge/451538981.svg)](https://zenodo.org/badge/latestdoi/451538981)
+Base: [![DOI](https://zenodo.org/badge/451538981.svg)](https://zenodo.org/badge/latestdoi/451538981) & [![GitHub](https://github.com/AlexanderMeisinger/Demand-Europe-Streamlit)https://github.com/AlexanderMeisinger/Demand-Europe-Streamlit]
 
-Branch: [Demand-Europe-Branch](https://github.com/AlexanderMeisinger/pypsa-eur/tree/H2G-A-Demand-Europe-WP3)
+Branch: [HySEE-Energy-Model](https://github.com/AlexanderMeisinger/HySEE-Energy-Model)
 
-Preparation: [Demand-Europe-Preparation](https://github.com/AlexanderMeisinger/analyse-h2g-a-ap3-eu)
+Preparation: [HySEE-Preparation](https://github.com/AlexanderMeisinger/HySEE-Preparation)
 
 ## Code for interactive dashboard for results exploration.
 
-See live version at: https://europe-demand.streamlit.app/
+See live version at: https://hysee.streamlit.app/
 
 ## Local Installation and Usage
 
