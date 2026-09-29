@@ -2,7 +2,7 @@ streamlit
 numpy
 pandas
 matplotlib
-plotly
+plotly>=5.15
 hvplot
 geopandas
 networkx

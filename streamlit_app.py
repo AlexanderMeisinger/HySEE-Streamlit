@@ -18,6 +18,7 @@ import datetime
 import hvplot.pandas
 import plotly.express as px
 from PIL import Image
+from regional_map import model_countries, render_regional_map
 
 from helpers import rename_techs_energy_balance, prepare_colors, rename_techs_h2_balance, rename_tech_capacity
 
@@ -33,101 +34,110 @@ preferred_order_energy_balance = pd.Index(config['preferred_order_energy_balance
 ## DISPLAY
 
 st.set_page_config(
-    page_title='H2Global meets Africa',
+    page_title='HySEE – Hydrogen in Southeast Europe',
     layout="wide"
 )
 
-style = '<style>div.block-container{padding-top:.5rem; padding-bottom:0rem; padding-right:1.2rem; padding-left:1.2rem}</style>'
+style = '<style>div.block-container{padding-top:.5rem; padding-bottom:0rem; padding-right:1.2rem; padding-left:1.2rem} footer {display: none !important;} [data-testid="stMetricLabel"] p {font-size: 16px !important;}</style>'
 st.write(style, unsafe_allow_html=True)
 
 ## SIDEBAR
 
 with st.sidebar:
-    image = Image.open("bmftr-logo.png")
-    st.image(image, width=150)
+    image = Image.open("euki-logo.png")
+    st.image(image, width=250)
     
-    st.title("H2Global meets Africa: Energy demand modelling in Germany and Europe")
+    st.title("HySEE – Hydrogen in Southeast Europe")
 
     st.markdown("""
         **Institute for Energy Networks and Energy Storage, OTH Regensburg**
     """)
 
+    spatial_countries = model_countries()
     pages = [
-        "Europe",
-        "Germany"
+        # "Europe",
+        # "Germany",
+        *spatial_countries,
     ]
     display = st.selectbox("Region", pages, help="Choose your view on the system.")
 
-    sel = {}
+    # Scenario sensitivities are set aside for now; all stay at the base scenario (0).
+    show_scenario_settings = False
+    sel = dict.fromkeys(["low_carbon", "high_carbon", "low_h2cost", "grid_freeze", "high_h2demand"], 0)
 
-    choices = {0: "2 °C", 1: "1.5 °C"}
-    sel["low_carbon"] = st.radio(
-        ":thermometer: Temperature rise",
-        choices,
-        format_func=lambda x: choices[x],
-        horizontal=True,
-        help='**Scenario settings:**\n\n'
-        '**2.0 °C:** Basis Scenario aligned with the European Green Deal. \n\n'
-        '**1.5 °C:** Scenario disigned to analyse the impact of the 1.5 °C climate target.',
-    )
+    if show_scenario_settings:
+        choices = {0: "2 °C", 1: "1.5 °C"}
+        sel["low_carbon"] = st.radio(
+            ":thermometer: Temperature rise",
+            choices,
+            format_func=lambda x: choices[x],
+            horizontal=True,
+            help='**Scenario settings:**\n\n'
+            '**2.0 °C:** Basis Scenario aligned with the European Green Deal. \n\n'
+            '**1.5 °C:** Scenario disigned to analyse the impact of the 1.5 °C climate target.',
+        )
 
-    choices = {0: "yes", 1: "no"}
-    sel["high_carbon"] = st.radio(
-        ":factory: Climate goals",
-        choices,
-        format_func=lambda x: choices[x],
-        horizontal=True,
-        help='**Scenario settings:**\n\n'
-        '**Yes:** Basis Scenario aligned with the European Green Deal. \n\n'
-        '**No:** Scenario designed to analyse the impact of no further progress on climate actions after 2025.',
-    )
+        choices = {0: "yes", 1: "no"}
+        sel["high_carbon"] = st.radio(
+            ":factory: Climate goals",
+            choices,
+            format_func=lambda x: choices[x],
+            horizontal=True,
+            help='**Scenario settings:**\n\n'
+            '**Yes:** Basis Scenario aligned with the European Green Deal. \n\n'
+            '**No:** Scenario designed to analyse the impact of no further progress on climate actions after 2025.',
+        )
 
-    choices = {0: "No", 1: "Yes"}
-    sel["low_h2cost"] = st.radio(
-        "💰 Low H2 cost",
-        choices,
-        format_func=lambda x: choices[x],
-        horizontal=True,
-        help='**Scenario settings:**\n\n'
-        '**No:** Basis Scenario aligned with the European Green Deal. \n\n'
-        '**Yes:** Scenario designed to analyse the impact of a 25% reduction in electrolyser CAPEX costs.',
-    )
-    
-    choices = {0: "no", 1: "yes"}
-    sel["grid_freeze"] = st.radio(
-        "🧊 Grid freeze",
-        choices,
-        format_func=lambda x: choices[x],
-        horizontal=True,
-        help='**Scenario settings:**\n\n'
-        '**No:** Basis Scenario aligned with the European Green Deal. \n\n'
-        '**Yes:** Scenario designed to analyse the impact of no additional network expansion.',
-    )
-    
-    choices = {0: "no", 1: "yes"}
-    sel["high_h2demand"] = st.radio(
-        "💧 High H2 demand",
-        choices,
-        format_func=lambda x: choices[x],
-        horizontal=True,
-        help='**Scenario settings:**\n\n'
-        '**No:** Basis Scenario aligned with the European Green Deal. \n\n'
-        '**Yes:** Scenario designed to analyse the impact of a 20% increase in hydrogen demand in the HVC industry, aviation, and automotive sectors.',
-    )
+        choices = {0: "No", 1: "Yes"}
+        sel["low_h2cost"] = st.radio(
+            "💰 Low H2 cost",
+            choices,
+            format_func=lambda x: choices[x],
+            horizontal=True,
+            help='**Scenario settings:**\n\n'
+            '**No:** Basis Scenario aligned with the European Green Deal. \n\n'
+            '**Yes:** Scenario designed to analyse the impact of a 25% reduction in electrolyser CAPEX costs.',
+        )
+
+        choices = {0: "no", 1: "yes"}
+        sel["grid_freeze"] = st.radio(
+            "🧊 Grid freeze",
+            choices,
+            format_func=lambda x: choices[x],
+            horizontal=True,
+            help='**Scenario settings:**\n\n'
+            '**No:** Basis Scenario aligned with the European Green Deal. \n\n'
+            '**Yes:** Scenario designed to analyse the impact of no additional network expansion.',
+        )
+
+        choices = {0: "no", 1: "yes"}
+        sel["high_h2demand"] = st.radio(
+            "💧 High H2 demand",
+            choices,
+            format_func=lambda x: choices[x],
+            horizontal=True,
+            help='**Scenario settings:**\n\n'
+            '**No:** Basis Scenario aligned with the European Green Deal. \n\n'
+            '**Yes:** Scenario designed to analyse the impact of a 20% increase in hydrogen demand in the HVC industry, aviation, and automotive sectors.',
+        )
 
     number_sensitivities = sel["low_carbon"] + sel["low_h2cost"] + sel["grid_freeze"] + sel["high_h2demand"] + sel["high_carbon"]
 
-    with st.expander("Details"):
+    definitions_container = st.container()
+
+    with st.expander("About"):
          st.write("""
-             All results were created using the open European energy system model
-             PyPSA-Eur-Sec. The model covers all energy sectors including
-             electricity, buildings, transport, agriculture and industry at high
-             spatio-temporal resolution. The code for the energy model and for data preparation is available on
-             [Github-Model](https://github.com/AlexanderMeisinger/pypsa-eur/tree/H2G-A-Demand-Europe-WP3) and                  
-             [Github-Preparation](https://github.com/AlexanderMeisinger/Demand-Europe-Preparation).
+             All results were created using the open energy system model PyPSA-Earth. The model covers all energy sectors including
+             electricity, buildings, transport, agriculture and industry at high spatio-temporal resolution. The code for the energy model and for data preparation is available on
+             [Github-Model](https://github.com/AlexanderMeisinger/pypsa-earth/tree/hysee) and [Github-Preparation](https://github.com/AlexanderMeisinger/HySEE-Preparation).
+
+             We acknowledge funding from the European Climate Initiative (EUKI) and the German Federal Ministry for the Environment, Climate Action, Nature Conservation and Nuclear Safety.
              """)
 
 ## PAGES
+
+if display in spatial_countries:
+    render_regional_map(display, definitions_container=definitions_container)
 
 if (display == "Europe") and (number_sensitivities <= 1):
 
@@ -383,7 +393,7 @@ if (display == "Germany") and (number_sensitivities <= 1):
     st.plotly_chart(plot, use_container_width=True)
 
 
-if number_sensitivities > 1:
+if number_sensitivities > 1 and display in ("Europe", "Germany"):
     
     st.write("")
     st.write("")
