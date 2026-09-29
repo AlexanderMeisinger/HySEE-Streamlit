@@ -1,0 +1,10 @@
+{
+  "country": "Bulgaria",
+  "run": "1h-sec",
+  "network": "elec_s_10_ec_lcopt_Co2L0.45-1h_1h_2030_0.07_AB_0export.nc",
+  "source_network": "/home/mea39219/hysee/Bulgaria/pypsa-earth/results/1h-sec/postnetworks/elec_s_10_ec_lcopt_Co2L0.45-1h_1h_2030_0.07_AB_0export.nc",
+  "source_regions": "/home/mea39219/hysee/Bulgaria/pypsa-earth/resources/1h-sec/bus_regions/regions_onshore_elec_s_10.geojson",
+  "region_count": 28,
+  "edge_count": 156,
+  "represented_hours": 8760.0
+}
