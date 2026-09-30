@@ -19,7 +19,7 @@ ATLAS_ENERGY_COLORS = ["#9ae2ef", "#6fccdc", "#65a5b8", "#316e87", "#0d4b63"]
 
 POTENTIAL = "Hydrogen potential (TWh H₂/year)"
 NETWORK_COLUMNS = ["bus0", "bus1", "carrier", "capacity_gw"]
-MAP_VIEWPORT_WIDTH, MAP_VIEWPORT_HEIGHT = 1400, 815
+MAP_VIEWPORT_WIDTH, MAP_VIEWPORT_HEIGHT = 1400, 785
 COLORBAR_MARGIN = 90
 MIN_MAP_VALUE = 0.01  # hide connections and nodes that would show as 0.00
 HIDDEN_METRICS = {'hydrogen_storage', 'solar_potential', 'wind_potential'}  # prepared, but not offered in the app
@@ -183,9 +183,10 @@ def build_spatial_map(data, geojson, edges, regions, network, nodes, metrics=Non
     latitude_fraction = max((mercator_north - mercator_south) / (2 * np.pi), 1e-6)
     # Usable viewport in pixels (world is 512 px wide at zoom 0): the width is a
     # conservative estimate of the wide-layout chart minus the colour scale,
-    # the height is the figure height minus the bottom margin.
+    # the height is the figure height minus the bottom margin. A small offset
+    # zooms out slightly so the regions do not touch the edges.
     zoom = float(np.clip(min(np.log2(MAP_VIEWPORT_WIDTH / (512 * longitude_fraction)),
-                             np.log2(MAP_VIEWPORT_HEIGHT / (512 * latitude_fraction))), 0, 8))
+                             np.log2(MAP_VIEWPORT_HEIGHT / (512 * latitude_fraction))) - 0.1, 0, 8))
     camera_revision = 'country-camera|' + '|'.join(data.region)
     # Plotly can only rotate colour bar titles counter-clockwise, so the title
     # is a clockwise-rotated annotation at the right edge of the figure.
@@ -199,7 +200,7 @@ def build_spatial_map(data, geojson, edges, regions, network, nodes, metrics=Non
     fig.update_layout(
         **{map_layout: {"style": basemap, "center": center, "zoom": zoom,
                        "uirevision": camera_revision}},
-        height=850, margin={"l": 0, "r": COLORBAR_MARGIN if show_colorbar else 0, "t": 0, "b": 85},
+        height=870, margin={"l": 0, "r": COLORBAR_MARGIN if show_colorbar else 0, "t": 0, "b": 85},
         legend={"orientation": "h", "font": {"size": 16, "color": "#31333F"}, "x": 1, "xanchor": "right", "y": -0.015, "yanchor": "top"}, uirevision=camera_revision,
     )
     return fig
