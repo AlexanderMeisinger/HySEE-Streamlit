@@ -199,7 +199,7 @@ def build_spatial_map(data, geojson, edges, regions, network, nodes, metrics=Non
     fig.update_layout(
         **{map_layout: {"style": basemap, "center": center, "zoom": zoom,
                        "uirevision": camera_revision}},
-        height=850, margin={"l": 0, "r": COLORBAR_MARGIN if show_colorbar else 0, "t": 0, "b": 85},
+        height=825, margin={"l": 0, "r": COLORBAR_MARGIN if show_colorbar else 0, "t": 0, "b": 85},
         legend={"orientation": "h", "font": {"size": 16, "color": "#31333F"}, "x": 1, "xanchor": "right", "y": -0.015, "yanchor": "top"}, uirevision=camera_revision,
     )
     return fig
