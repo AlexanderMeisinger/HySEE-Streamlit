@@ -287,7 +287,8 @@ def render_model_results(bundles, country, basemap=DEFAULT_BASEMAP, definitions_
     format_metric = lambda key: metrics[key][1].removesuffix(f" ({metrics[key][2]})") if key in metrics else key
     col1, col2, col3 = st.columns(3)
     regions = col1.selectbox('Energy', energy_options, index=min(1, len(energy_options) - 1), format_func=format_metric)
-    network = col2.selectbox('Network', ['Nothing', 'Hydrogen Network', 'Electricity Network'], index=1)
+    # The hydrogen network is left out: every region exports directly, so the model builds no pipelines.
+    network = col2.selectbox('Network', ['Nothing', 'Electricity Network'], index=1)
     # The list heading already says "Capacity", so the word is dropped from its entries.
     nodes = col3.selectbox('Capacity', capacity_options, format_func=lambda key: format_metric(key).replace(' capacity', ''),
                            index=capacity_options.index('electrolyser_capacity') if 'electrolyser_capacity' in capacity_options else min(1, len(capacity_options) - 1))
