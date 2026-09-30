@@ -239,6 +239,8 @@ def model_countries():
 
 
 def render_regional_map(country, definitions_container=None):
+    # The Streamlit Cloud toolbar overlaps the top of the page, so the title is pushed below it.
+    st.markdown('<div style="height:2.5rem"></div>', unsafe_allow_html=True)
     st.title(f"H2Atlas {country}")
     bundles = sorted((Path(__file__).parent / "data" / "spatial").glob("*/*/*/metadata.json"))
     render_model_results(bundles, country, definitions_container=definitions_container)
